@@ -25,6 +25,20 @@ TTS quality is multi-dimensional. A model can improve transcript accuracy while 
 - **Evidence-based release gates:** paired bootstrap confidence intervals and policy decisions avoid mean-only claims.
 - **Listening Lab:** controlled A/B, ABX, and rating-study records with randomized task order and deliberately cautious interpretation.
 
+## Product tour
+
+The screenshots below come from the seeded demo workspace plus a real inline fixture run executed locally for this repository.
+
+![SpeechEval overview dashboard](docs/assets/screenshots/overview.png)
+
+| Evaluation runs | Run Control Center |
+|---|---|
+| ![Evaluation runs registry](docs/assets/screenshots/runs.png) | ![Run Control Center with real sample evidence](docs/assets/screenshots/run-control-center.png) |
+
+| Compare Lab | System health |
+|---|---|
+| ![Compare Lab with integrity evaluation](docs/assets/screenshots/compare.png) | ![System health panel](docs/assets/screenshots/system.png) |
+
 ## Architecture
 
 The rendered overview below is backed by the source diagrams in [`docs/diagrams/`](docs/diagrams/), including [`system-architecture.mmd`](docs/diagrams/system-architecture.mmd), [`evaluation-lifecycle.mmd`](docs/diagrams/evaluation-lifecycle.mmd), and [`benchmark-integrity-guard.mmd`](docs/diagrams/benchmark-integrity-guard.mmd).
@@ -133,20 +147,6 @@ speecheval run inspect <run-id>
 ```
 
 `inline` mode executes locally on CPU. Compose sets `SPEECHEVAL_QUEUE_MODE=dramatiq`, where the API publishes durable job UUIDs through Redis and the worker runs `dramatiq app.workers.tasks`. The durable database job remains the idempotency and audit source of truth; Redis is only the delivery transport.
-
-## Product tour
-
-The screenshots below come from the seeded demo workspace plus a real inline fixture run executed locally for this repository.
-
-![SpeechEval overview dashboard](docs/assets/screenshots/overview.png)
-
-| Evaluation runs | Run Control Center |
-|---|---|
-| ![Evaluation runs registry](docs/assets/screenshots/runs.png) | ![Run Control Center with real sample evidence](docs/assets/screenshots/run-control-center.png) |
-
-| Compare Lab | System health |
-|---|---|
-| ![Compare Lab with integrity evaluation](docs/assets/screenshots/compare.png) | ![System health panel](docs/assets/screenshots/system.png) |
 
 ## Real CPU metric surface
 
