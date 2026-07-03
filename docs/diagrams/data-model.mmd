@@ -1,0 +1,9 @@
+erDiagram
+    PROJECT ||--o{ DATASET : contains
+    DATASET ||--o{ DATASET_VERSION : versions
+    DATASET_VERSION ||--o{ DATASET_ITEM : includes
+    PROJECT ||--o{ MODEL : registers
+    MODEL ||--o{ MODEL_VERSION : versions
+    PROJECT ||--o{ EVALUATION_RUN : owns
+    EVALUATION_RUN }o--|| DATASET_VERSION : evaluates
+    EVALUATION_RUN }o--|| MODEL_VERSION : benchmarks

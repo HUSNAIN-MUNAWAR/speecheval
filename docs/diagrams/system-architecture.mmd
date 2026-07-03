@@ -1,0 +1,13 @@
+flowchart LR
+    U[Researcher / ML Engineer] --> W[SpeechEval Web App]
+    W --> A[FastAPI API]
+    A --> DB[(PostgreSQL / SQLite)]
+    A --> Q[(Redis Queue)]
+    A --> S[Artifact Storage<br/>Local FS / MinIO / S3]
+    Q --> WK[Evaluation Worker]
+    WK --> M[Metric Plugin Registry]
+    M --> R[Result Aggregator]
+    R --> G[Regression Gate Engine]
+    G --> REP[Reports]
+    A --> EVT[Live Events]
+    EVT --> W

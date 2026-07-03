@@ -1,0 +1,10 @@
+name: Docker validation
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cp .env.example .env && docker compose config
+      - run: docker build -t speecheval-api ./backend
+      - run: docker build -t speecheval-web ./apps/web

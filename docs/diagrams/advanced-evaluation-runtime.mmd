@@ -1,0 +1,32 @@
+flowchart LR
+    U[Engineer / Researcher] --> UI[SpeechEval Web UI]
+    U --> CLI[SpeechEval CLI]
+    CI[GitHub Actions] --> API[FastAPI API]
+    UI --> API
+    CLI --> API
+    API --> DB[(PostgreSQL / SQLite)]
+    API --> Q[(Redis Queue)]
+    API --> ST[Artifact Storage]
+    Q --> W1[CPU Worker]
+    Q --> W2[ASR Worker]
+    Q --> W3[Optional GPU Worker]
+    W1 --> V[Audio Validation]
+    W1 --> AQ[Audio Quality Metrics]
+    W1 --> PR[Pitch and Prosody]
+    W2 --> ASR[ASR / WER / CER]
+    W2 --> SP[Speaker Similarity]
+    W3 --> GM[Optional GPU Metrics]
+    V --> AGG[Aggregation Engine]
+    AQ --> AGG
+    PR --> AGG
+    ASR --> AGG
+    SP --> AGG
+    GM --> AGG
+    AGG --> INT[Benchmark Integrity Guard]
+    INT --> STAT[Statistical Comparison]
+    STAT --> GATE[Regression Gate Engine]
+    GATE --> CARD[Benchmark Card Generator]
+    CARD --> ST
+    CARD --> DB
+    API --> EVT[Live Run Events]
+    EVT --> UI

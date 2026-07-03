@@ -1,0 +1,17 @@
+version: "1.0"
+dataset:
+  name: "English Narration Mini"
+  language: "en"
+  description: "Small reproducible TTS benchmark dataset"
+items:
+  - id: "en_001"
+    text: "Speech evaluation should be reproducible and transparent."
+    language: "en"
+    generated_audio: "audio/en_001.wav"
+    reference_audio: "references/ref_speaker_a.wav"
+    tags: [narration, short-form]
+    metadata:
+      model: "example-tts"
+      model_version: "0.1.0"
+      temperature: 0.7
+      seed: 42

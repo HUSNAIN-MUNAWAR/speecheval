@@ -1,0 +1,58 @@
+name: SpeechEval TTS regression
+
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_run_id:
+        description: Completed SpeechEval candidate run UUID
+        required: true
+        type: string
+      baseline_run_id:
+        description: Completed SpeechEval baseline run UUID
+        required: true
+        type: string
+  pull_request:
+    paths:
+      - "speecheval.yaml"
+      - "fixtures/**"
+      - "audio/**"
+
+jobs:
+  evaluate:
+    name: Evaluate and compare
+    runs-on: ubuntu-latest
+    env:
+      # Set this to a reachable, authenticated SpeechEval deployment in repository secrets.
+      SPEECHEVAL_API_URL: ${{ secrets.SPEECHEVAL_API_URL }}
+      SPEECHEVAL_API_TOKEN: ${{ secrets.SPEECHEVAL_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install the SpeechEval CLI
+        run: pip install -e backend
+
+      - name: Validate the benchmark manifest
+        run: speecheval dataset validate examples/manifests/demo.yaml
+
+      # A production TTS repository normally generates candidate audio and creates/enqueues
+      # a run before this step. Run IDs are intentionally supplied as inputs/secrets here:
+      # the example never treats fixture values as release evidence.
+      - name: Compare completed benchmark runs
+        id: comparison
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          speecheval ci evaluate \
+            --candidate-run "${{ inputs.candidate_run_id }}" \
+            --baseline-run "${{ inputs.baseline_run_id }}" \
+            --format markdown > speecheval-summary.md
+          cat speecheval-summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the evaluation summary
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: speecheval-regression-summary
+          path: speecheval-summary.md

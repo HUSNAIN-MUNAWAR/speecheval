@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant User
+    participant Web
+    participant API
+    participant Queue
+    participant Worker
+    participant DB
+    User->>Web: Configure evaluation
+    Web->>API: Create run
+    API->>DB: Freeze manifest
+    API->>Queue: Enqueue job
+    Worker->>Queue: Pull job
+    Worker->>DB: Persist sample results
+    API-->>Web: Stream live progress
+    Worker->>DB: Persist aggregate and decision

@@ -1,0 +1,7 @@
+name: Release skeleton
+on: { workflow_dispatch: {} }
+jobs:
+  notes:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Add release-please after the first stable evaluation schema."

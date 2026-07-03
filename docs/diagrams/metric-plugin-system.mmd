@@ -1,0 +1,13 @@
+flowchart TB
+    C[Evaluation Context] --> R[Metric Registry]
+    R --> V[Validation]
+    R --> W[WER/CER]
+    R --> S[Speaker Similarity]
+    R --> P[Pitch/Prosody]
+    V --> O[Standard Metric Result]
+    W --> O
+    S --> O
+    P --> O
+    O --> A[Aggregation]
+    A --> G[Regression Gate]
+    G --> REP[Reports and UI]

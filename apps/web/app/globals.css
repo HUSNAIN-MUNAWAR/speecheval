@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  --canvas: 225 22% 7%;
+  --surface: 226 20% 9%;
+  --panel: 226 18% 12%;
+  --line: 225 14% 21%;
+  --ink: 220 18% 94%;
+  --muted: 222 12% 64%;
+  --accent: 239 84% 71%;
+  --success: 164 63% 49%;
+  --warning: 39 92% 59%;
+  --danger: 0 77% 63%;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  min-width: 320px;
+  background: hsl(var(--canvas));
+}
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: hsl(var(--ink));
+  background:
+    radial-gradient(
+      60rem 32rem at 16% -10%,
+      rgba(89, 92, 240, 0.15),
+      transparent 62%
+    ),
+    radial-gradient(
+      42rem 25rem at 100% 0%,
+      rgba(42, 168, 155, 0.06),
+      transparent 62%
+    ),
+    hsl(var(--canvas));
+  font-family: Arial, Helvetica, sans-serif;
+}
+::selection {
+  background: rgba(129, 132, 255, 0.35);
+}
+button,
+input {
+  font: inherit;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid hsl(var(--accent));
+  outline-offset: 3px;
+}
+@layer components {
+  .panel {
+    @apply rounded-2xl border border-line bg-panel/95 shadow-panel;
+  }
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[.16em] text-muted;
+  }
+  .mono {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  }
+  .grid-lines {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

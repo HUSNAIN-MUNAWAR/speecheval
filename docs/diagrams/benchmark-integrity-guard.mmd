@@ -1,0 +1,16 @@
+flowchart TD
+    A[Candidate Run] --> C{Same Dataset Version?}
+    B[Baseline Run] --> C
+    C -- No --> X[Not Comparable]
+    C -- Yes --> D{Same Metric Versions?}
+    D -- No --> X
+    D -- Yes --> E{Same Normalization Profile?}
+    E -- No --> W[Comparable With Warnings]
+    E -- Yes --> F{Same Sample Inclusion Rules?}
+    F -- No --> X
+    F -- Yes --> G{Same Hardware Profile?}
+    G -- No --> W
+    G -- Yes --> H[Strictly Comparable]
+    H --> I[Statistical Comparison]
+    W --> I
+    I --> J[Regression Gate Decision]
